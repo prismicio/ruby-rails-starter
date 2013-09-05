@@ -1,0 +1,30 @@
+<header>
+  <a href="/">
+    <h1>Your prismic.io project</h1>
+  </a>
+</header>
+<form action="/search" method="GET">
+  <input type="text" name="q" value="">
+  <input type="submit" value="Search">
+</form>
+<hr />
+<h2>20 documents found</h2>
+<ul>
+  <li>
+    <a href="/documents/UdUkXt_mqZBObPeS/vanilla-macaron">
+      vanilla-macaron
+    </a>
+  </li>
+  <% @api.types.each do |doc| %>
+    <li>
+      <%= doc %>
+    </li>
+  <% end %>
+</ul>
+<footer>
+  <a href="/signin">Sign in to preview changes</a>
+</footer>
+
+<pre>
+<%= JSON.pretty_generate(@api.as_json) %>
+</pre>

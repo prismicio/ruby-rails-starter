@@ -53,4 +53,20 @@ StarterRubyRails::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  # # Home page
+  # GET     /                                           controllers.Application.index(ref: Option[String])
+  root 'application#index'
+
+  # # Document detail
+  # GET     /documents/$id<[-_a-zA-Z0-9]{16}>/:slug     controllers.Application.detail(id, slug, ref: Option[String] ?= None)
+
+  # # Basic search
+  # GET     /search                                     controllers.Application.search(q: Option[String] ?= None, ref: Option[String] ?= None)
+
+  # # Prismic.io OAuth
+  # GET     /signin                                     controllers.Prismic.signin
+  # GET     /auth_callback                              controllers.Prismic.callback(code: Option[String], redirect_uri: Option[String])
+  # POST    /signout                                    controllers.Prismic.signout()
+
 end
