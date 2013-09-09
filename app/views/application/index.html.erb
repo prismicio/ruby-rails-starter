@@ -9,23 +9,33 @@
   <input type="submit" value="Search">
 </form>
 <hr />
-<h2>20 documents found</h2>
+<h2>
+  <%=
+    case @documents.size
+    when 0
+      "No document found"
+    when 1
+      "One document found"
+    else
+      "#{@documents.size} documents found"
+    end
+  %>
+</h2>
+
 <ul>
-  <li>
-    <a href="/documents/UdUkXt_mqZBObPeS/vanilla-macaron">
-      vanilla-macaron
-    </a>
-  </li>
-  <% @api.types.each do |doc| %>
+  <% @documents.each do |doc| %>
     <li>
-      <%= doc %>
+    <%=
+      doc['slugs'].first
+    %>
     </li>
   <% end %>
 </ul>
+
 <footer>
   <a href="/signin">Sign in to preview changes</a>
 </footer>
 
 <pre>
-<%= JSON.pretty_generate(@api.as_json) %>
+<%= JSON.pretty_generate(@documents) %>
 </pre>
