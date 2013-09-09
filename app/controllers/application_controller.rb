@@ -4,11 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def index
-    @documents = api.form("everything").submit(ref: 'master')
+    @ref = api.ref_id_by_label('Master')
+    @documents = api.form("everything").submit(@ref.ref)
   end
 
   def api
-    @api ||= Prismic.api("http://lesbonneschoses.wroom.io/api")
+    @api ||= Prismic.api("http://lesbonneschoses.prismic.io/api")
   end
 
 end
