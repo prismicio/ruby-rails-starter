@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :set_ref
 
   def index
-    @documents = api.form("everything").submit(@ref)
+    begin
+      @documents = api.form("everything").submit(@ref)
+    rescue Prismic::SearchForm::RefNotFoundException => e
+      render inline: e.message, :status => :not_found
+    end
   end
 
   def api
