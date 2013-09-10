@@ -59,7 +59,7 @@ StarterRubyRails::Application.routes.draw do
   root 'application#index'
 
   # # Document detail
-  # GET     /documents/$id<[-_a-zA-Z0-9]{16}>/:slug     controllers.Application.detail(id, slug, ref: Option[String] ?= None)
+   get '/document/:id/:slug', to: 'application#document', constraints: {id: /[-_a-zA-Z0-9]{16}/}, as: :document
 
   # # Basic search
   # GET     /search                                     controllers.Application.search(q: Option[String] ?= None, ref: Option[String] ?= None)
@@ -68,5 +68,4 @@ StarterRubyRails::Application.routes.draw do
   # GET     /signin                                     controllers.Prismic.signin
   # GET     /auth_callback                              controllers.Prismic.callback(code: Option[String], redirect_uri: Option[String])
   # POST    /signout                                    controllers.Prismic.signout()
-
 end
