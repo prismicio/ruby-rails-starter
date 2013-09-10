@@ -25,9 +25,7 @@
 <ul>
   <% @documents.each do |doc| %>
     <li>
-    <%=
-      doc['slugs'].first
-    %>
+    <%= doc.slugs.first %>
     </li>
   <% end %>
 </ul>
