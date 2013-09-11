@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :set_ref
 
@@ -17,7 +15,7 @@ class ApplicationController < ActionController::Base
     id = params[:id]
     slug = params[:slug]
 
-    @document = get_document(id)
+    @document = PrismicService.get_document(id, api, @ref)
     if @document.nil?
       render inline: "Document not found", status: :not_found
     end
@@ -33,19 +31,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def get_document(id)
-    documents = @api.form("everything")
-    .query("[[:d = at(document.id, \"#{id}\")]]")
-    .submit(@ref)
-
-    documents.empty? ? nil : documents.first
-  end
-
   def set_ref
     @ref = params[:ref] || api.ref_id_by_label('Master').ref
   end
 
   def api
-    @api ||= Prismic.api("https://lesbonneschoses.prismic.io/api")
+    @api ||= PrismicService.init_api
   end
 end
