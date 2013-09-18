@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   def index
     begin
       @documents = api.form("everything").submit(@ref)
-      render inline: JSON.pretty_generate(@documents)
     rescue Prismic::SearchForm::RefNotFoundException => e
       render inline: e.message, :status => :not_found
     end
