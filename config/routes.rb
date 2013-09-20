@@ -59,10 +59,10 @@ StarterRubyRails::Application.routes.draw do
   root 'application#index'
 
   # # Document detail
-   get '/document/:id/:slug', to: 'application#document', constraints: {id: /[-_a-zA-Z0-9]{16}/}, as: :document
+  get '/document/:id/:slug', to: 'application#document', constraints: {id: /[-_a-zA-Z0-9]{16}/}, as: :document
 
   # # Basic search
-  # GET     /search                                     controllers.Application.search(q: Option[String] ?= None, ref: Option[String] ?= None)
+  get '/search', to: 'application#search', as: :search
 
   # # Prismic.io OAuth
   # GET     /signin                                     controllers.Prismic.signin

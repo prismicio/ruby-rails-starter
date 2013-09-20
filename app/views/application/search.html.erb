@@ -1,0 +1,24 @@
+<%=
+  case @documents.size
+  when 0
+    "No result found"
+  when 1
+    "One document found"
+  else
+    "#{@documents.size} documents found"
+  end
+%>
+
+<ul>
+  <% @documents.each do |doc| %>
+    <li>
+      <a href="<%= PrismicService.link_resolver(doc.id, doc.slug, params[:ref]) %>">
+        <%= doc.slugs.first %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+<%= link_to "Back to home", Rails.application.routes.named_routes.helpers.root_path(:ref => params[:ref]) %>
+</p>

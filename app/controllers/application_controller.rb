@@ -17,15 +17,19 @@ class ApplicationController < ActionController::Base
     @document = PrismicService.get_document(id, api, @ref)
     if @document.nil?
       render inline: "Document not found", status: :not_found
-    end
-
-    if slug == @document.slug
-      @document
-    elsif document.slugs.contains(slug)
-      redirect_to document_application_path(id, slug), status: :moved_permanently
     else
-      render inline: "Slug not found", status: :not_found
+      if slug == @document.slug
+        @document
+      elsif document.slugs.contains(slug)
+        redirect_to document_application_path(id, slug), status: :moved_permanently
+      else
+        render inline: "Slug not found", status: :not_found
+      end
     end
+  end
+
+  def search
+    @documents = api.form("everything").query(%([[:d = fulltext(document, "#{params[:q]}")]])).submit(@ref)
   end
 
   private
