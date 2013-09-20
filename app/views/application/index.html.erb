@@ -20,7 +20,7 @@
 <ul>
   <% @documents.each do |doc| %>
     <li>
-      <a href="<%= Rails.application.routes.named_routes.helpers.document_path(:id => doc.id, :slug => doc.slug, :ref => params[:ref]) %>">
+      <a href="<%= PrismicService.link_resolver(doc.id, doc.slug, params[:ref]) %>">
         <%= doc.slugs.first %>
       </a>
     </li>
