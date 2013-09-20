@@ -1,8 +1,3 @@
-<header>
-  <a href="/">
-    <h1>Your prismic.io project</h1>
-  </a>
-</header>
 <form action="/search" method="GET">
   <input type="text" name="q" value="">
   <input type="hidden" name="ref" value="<%= @ref %>">
@@ -25,7 +20,9 @@
 <ul>
   <% @documents.each do |doc| %>
     <li>
-    <%= doc.slugs.first %>
+      <a href="<%= Rails.application.routes.named_routes.helpers.document_path(:id => doc.id, :slug => doc.slug, :ref => params[:ref]) %>">
+        <%= doc.slugs.first %>
+      </a>
     </li>
   <% end %>
 </ul>
