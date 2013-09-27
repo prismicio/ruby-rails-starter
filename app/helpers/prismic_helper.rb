@@ -7,4 +7,8 @@ module PrismicHelper
     link_to(url_to_doc(doc, ref), html_options, &blk)
   end
 
+  def display_doc(doc)
+    doc.as_html(nil).html_safe
+  end
+
 end
