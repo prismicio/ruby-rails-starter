@@ -1,5 +1,4 @@
 module PrismicService
-  include Rails.application.routes.named_routes.module
 
   class << self
     def get_document(id, api, ref)
@@ -14,8 +13,5 @@ module PrismicService
       Prismic.api("https://lesbonneschoses.prismic.io/api")
     end
 
-    def link_resolver(document_id, document_slug, ref = nil)
-      document_path(:id => document_id, :slug => document_slug, :ref => ref)
-    end
   end
 end
