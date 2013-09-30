@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     begin
       @documents = api.form("everything").submit(@ref)
     rescue Prismic::SearchForm::RefNotFoundException => e
-      render inline: e.message, :status => :not_found
+      render inline: e.message, status: :not_found
     end
   end
 
@@ -17,14 +17,12 @@ class ApplicationController < ActionController::Base
     @document = PrismicService.get_document(id, api, @ref)
     if @document.nil?
       render inline: "Document not found", status: :not_found
+    elsif slug == @document.slug
+      @document
+    elsif document.slugs.contains(slug)
+      redirect_to document_application_path(id, slug), status: :moved_permanently
     else
-      if slug == @document.slug
-        @document
-      elsif document.slugs.contains(slug)
-        redirect_to document_application_path(id, slug), status: :moved_permanently
-      else
-        render inline: "Slug not found", status: :not_found
-      end
+      render inline: "Document not found", status: :not_found
     end
   end
 
