@@ -1,4 +1,4 @@
-<%=
+<h1><%=
   case @documents.size
   when 0
     "No result found"
@@ -7,18 +7,18 @@
   else
     "#{@documents.size} documents found"
   end
-%>
+%></h1>
 
 <ul>
   <% @documents.each do |doc| %>
     <li>
-      <a href="<%= PrismicService.link_resolver(doc.id, doc.slug, params[:ref]) %>">
+      <%= link_to_doc(doc, params[:ref]) do %>
         <%= doc.slugs.first %>
-      </a>
+      <% end %>
     </li>
   <% end %>
 </ul>
 
 <p>
-<%= link_to "Back to home", Rails.application.routes.named_routes.helpers.root_path(:ref => params[:ref]) %>
+  <%= link_to "Back to home", root_path(ref: params[:ref]) %>
 </p>
