@@ -30,13 +30,50 @@ class ApplicationController < ActionController::Base
     @documents = api.form("everything").query(%([[:d = fulltext(document, "#{params[:q]}")]])).submit(@ref)
   end
 
+  def get_callback_url
+    callback_url(redirect_uri: request.env['referer'])
+  end
+
+  def signin
+    url = api.oauth_initiate_url({
+      client_id: PrismicService.config("client_id"),
+      redirect_uri: get_callback_url,
+      scope: "master+releases"
+    })
+    redirect_to url
+  end
+
+  def callback
+    access_token = api.oauth_check_token({
+      grant_type: "authorization_code",
+      code: params[:code],
+      redirect_uri: get_callback_url,
+      client_id: PrismicService.config("client_id"),
+      client_secret: PrismicService.config("client_secret"),
+    })
+    if access_token
+      session['ACCESS_TOKEN'] = access_token
+      url = params['redirect_uri'] || root_path
+      redirect_to url
+    else
+      render "Can't sign you in", status: :unauthorized
+    end
+  end
+
+  def signout
+    session['ACCESS_TOKEN'] = nil
+    redirect_to :root
+  end
+
   private
 
   def set_ref
-    @ref = params[:ref] || api.ref_id_by_label('Master').ref
+    @ref = params[:ref].blank? ? api.master_ref.ref : params[:ref]
   end
 
   def api
-    @api ||= PrismicService.init_api
+    @access_token = session['ACCESS_TOKEN']
+    @api ||= PrismicService.init_api(@access_token)
   end
+
 end

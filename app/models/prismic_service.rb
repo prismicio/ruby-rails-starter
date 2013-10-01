@@ -14,8 +14,13 @@ module PrismicService
       documents.empty? ? nil : documents.first
     end
 
-    def init_api
-      Prismic.api(config('url'), config['token'])
+    def access_token
+      config['token']
+    end
+
+    def init_api(access_token)
+      access_token ||= self.access_token
+      Prismic.api(config('url'), access_token)
     end
 
   end

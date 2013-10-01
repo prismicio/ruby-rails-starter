@@ -68,4 +68,7 @@ StarterRubyRails::Application.routes.draw do
   # GET     /signin                                     controllers.Prismic.signin
   # GET     /auth_callback                              controllers.Prismic.callback(code: Option[String], redirect_uri: Option[String])
   # POST    /signout                                    controllers.Prismic.signout()
+  get '/signin', to: 'application#signin', as: :signin
+  get '/callback', to: 'application#callback', as: :callback
+  get '/signout', to: 'application#signout', as: :signout
 end
