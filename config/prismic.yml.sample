@@ -1,2 +1,4 @@
 ---
 url: https://lesbonneschoses.prismic.io/api
+# If specified this token is used for all "guest" requests
+# token: ""

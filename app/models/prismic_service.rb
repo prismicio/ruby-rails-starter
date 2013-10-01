@@ -15,7 +15,7 @@ module PrismicService
     end
 
     def init_api
-      Prismic.api(config('url'))
+      Prismic.api(config('url'), config['token'])
     end
 
   end
