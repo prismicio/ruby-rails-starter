@@ -1,9 +1,9 @@
 module PrismicService
   class << self
 
-    def config
-      pp Rails.root
+    def config(key=nil)
       @config ||= YAML.load_file(Rails.root + "config" + "prismic.yml")
+      key ? @config.fetch(key) : @config
     end
 
     def get_document(id, api, ref)
@@ -15,7 +15,7 @@ module PrismicService
     end
 
     def init_api
-      Prismic.api(config['url'])
+      Prismic.api(config('url'))
     end
 
   end
