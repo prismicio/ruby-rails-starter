@@ -1,3 +1,0 @@
-[submodule "lib/prismic-ruby-kit"]
-	path = lib/prismic-ruby-kit
-	url = git@github.com:prismicio/ruby-kit.git
