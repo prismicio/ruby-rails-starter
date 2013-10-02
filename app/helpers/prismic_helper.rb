@@ -1,17 +1,5 @@
 module PrismicHelper
 
-  class LinkResolver
-    include PrismicHelper
-    attr_reader :ref
-    def initialize(ref, &blk)
-      @ref = ref
-      @blk = blk
-    end
-    def link_to(doc_link)
-      @blk.call(id: doc_link.id, slug: doc_link.slug, ref: ref)
-    end
-  end
-
   def url_to_doc(doc, ref)
     document_path(id: doc.id, slug: doc.slug, ref: ref)
   end
@@ -24,7 +12,7 @@ module PrismicHelper
   end
 
   def link_resolver(ref)
-    LinkResolver.new(ref){|args| document_path(args) }
+    Prismic::LinkResolver.new(ref){|args| document_path(args) }
   end
 
 end
