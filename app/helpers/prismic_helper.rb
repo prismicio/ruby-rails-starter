@@ -15,8 +15,24 @@ module PrismicHelper
     Prismic::LinkResolver.new(ref){|args| document_path(args) }
   end
 
+  def privileged_access?
+    connected? || PrismicService.access_token
+  end
+
   def connected?
     !!@access_token
+  end
+
+  def current_ref
+    @ref
+  end
+
+  def master_ref
+    @api.master_ref.ref
+  end
+
+  def api
+    @api
   end
 
 end

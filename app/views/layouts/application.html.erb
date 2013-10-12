@@ -9,6 +9,27 @@
 <body>
 
 <header>
+  <% if privileged_access? %>
+    <div id="toolbar">
+      <form method="GET">
+        <label for="releaseSelector">See this website: </label>
+        <select id="releaseSelector" name="ref" onchange="this.form.submit()">
+          <% if !api.refs.map{|_,r| r.ref }.include?(current_ref) %>
+            <option>?</option>
+          <% end %>
+          <option value="" <% if current_ref == master_ref %>selected="selected"<% end %>>As currently seen by guest visitors</option>
+          <optgroup label="Or preview the website in a future release:">
+            <% api.refs.reject{|_,r| r.master? }.each do |_, ref| %>
+              <option value="<%= ref.ref %>" <% if current_ref == ref.ref %>selected="selected"<% end %>>
+                As <%= ref.label %> <%= ref.scheduled_at && ref.scheduled_at.strftime("%Y-%m-%d") %>
+              </option>
+            <% end %>
+          </optgroup>
+        </select>
+      </form>
+    </div>
+    <hr />
+  <% end %>
   <a href="/">
     <h1>Your prismic.io project</h1>
   </a>
