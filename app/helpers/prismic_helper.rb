@@ -12,7 +12,7 @@ module PrismicHelper
   end
 
   def link_resolver(ref)
-    Prismic::LinkResolver.new(ref){|args| document_path(args) }
+    Prismic::LinkResolver.new(ref){|doc| document_path(id: doc.id, slug: doc.slug) }
   end
 
   def privileged_access?
