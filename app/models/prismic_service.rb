@@ -7,9 +7,9 @@ module PrismicService
     end
 
     def get_document(id, api, ref)
-      documents = api.form("everything")
-      .query("[[:d = at(document.id, \"#{id}\")]]")
-      .submit(ref)
+      documents = api.create_search_form("everything")
+                     .query("[[:d = at(document.id, \"#{id}\")]]")
+                     .submit(ref)
 
       documents.empty? ? nil : documents.first
     end

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
 
   def index
     begin
-      @documents = api.form("everything").submit(@ref)
+      @documents = api.create_search_form("everything")
+                      .submit(@ref)
     rescue Prismic::SearchForm::RefNotFoundException => e
       render inline: e.message, status: :not_found
     end
@@ -27,7 +28,9 @@ class ApplicationController < ActionController::Base
   end
 
   def search
-    @documents = api.form("everything").query(%([[:d = fulltext(document, "#{params[:q]}")]])).submit(@ref)
+    @documents = api.create_search_form("everything")
+                    .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
+                    .submit(@ref)
   end
 
   def get_callback_url
