@@ -18,6 +18,14 @@ By default, the starter kit uses the public API of the "Les Bonnes Choses" repos
 
 To get the OAuth configuration working, go to the Applications panel in your repository settings, and create an OAuth application to allow interactive sign-in. Just create a new application, fill the application name and the callback URL (localhost URLs are always authorized, so at development time you can omit to fill the Callback URL field), and copy/paste the clientId & clientSecret tokens into the `config/prismic.yml` file.
 
+### Starter Kit Documentation
+
+You should check out [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), which sets general information about how our kits work, and [the "Kit documentation" of the Ruby development kit](https://github.com/prismicio/ruby-kit) for specifics about how the gem works.
+
+Below are some extra orgnization and helpers that make your live easier in this starter kit.
+ * A `PrismicService` class is included, which comes with a few interesting methods, including `PrismicService.get_document(id,api,ref)` to make a quicker query from an ID.
+ * the `ApplicationController` as it is provided initializes and keeps both `@api` and `@ref` as instance variables.
+
 ### Licence
 
 This software is licensed under the Apache 2 license, quoted below.
