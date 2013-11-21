@@ -22,9 +22,11 @@ To get the OAuth configuration working, go to the Applications panel in your rep
 
 You should check out [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), which sets general information about how our kits work, and [the "Kit documentation" of the Ruby development kit](https://github.com/prismicio/ruby-kit) for specifics about how the gem works.
 
-Below are some extra orgnization and helpers that make your live easier in this starter kit.
+Below are some extra helpers included in this starter kit to make your life easier.
  * A `PrismicService` class is included, which comes with a few interesting methods, including `PrismicService.get_document(id,api,ref)` to make a quicker query from an ID.
- * the `ApplicationController` as it is provided initializes and keeps both `@api` and `@ref` as instance variables.
+ * the `ApplicationController` as it is out of the box initializes `@ref` as an instance variable.
+ * you can also use the api method in the `ApplicationController` as it is out of the box, which initializes it if it wasn't initialized yet.
+ * A `PrismicHelper` module is also provided, that provides several interesting methods, including a `link_resolver` method that you can use in your `as_html` calls out of the box, and that you can fine-tune later, as you get more serious about your URL strategy.
 
 ### Licence
 
