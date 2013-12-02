@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
       render inline: "Document not found", status: :not_found
     elsif slug == @document.slug
       @document
-    elsif document.slugs.contains(slug)
-      redirect_to document_application_path(id, slug), status: :moved_permanently
+    elsif @document.slugs.include?(slug)
+      redirect_to document_path(id, @document.slug), status: :moved_permanently
     else
       render inline: "Document not found", status: :not_found
     end
