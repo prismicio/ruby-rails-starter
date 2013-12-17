@@ -20,9 +20,12 @@
 <ul>
   <% @documents.each do |doc| %>
     <li>
-      <%= link_to_doc(doc, params[:ref]) do %>
-        <%= doc.slugs.first %>
-      <% end %>
+      <%= link_to doc.slug, link_resolver(@maybe_ref).link_to(doc) %>
+      <%#
+        We could have written document_path(id: doc.id, slug: doc.slug, ref: maybe_ref);
+        but it's better to use the link_resolver, as it allows you to maintain in one place
+        the way all the documents' URLs are supposed to be written, whatever their types.
+      %>
     </li>
   <% end %>
 </ul>
