@@ -6,7 +6,7 @@ module PrismicHelper
   # Beware: doc is not a Prismic::Document, but a Prismic::Fragments::DocumentLink,
   # containing only the information you already have without querying more (see DocumentLink documentation)
   def link_resolver(maybe_ref)
-    Prismic::LinkResolver.new(maybe_ref){|doc|
+    @link_resolver ||= Prismic::LinkResolver.new(maybe_ref){|doc|
       document_path(id: doc.id, slug: doc.slug, ref: maybe_ref)
       # maybe_ref is not expected by document path, so it appends a ?ref=maybe_ref to the URL;
       # since maybe_ref is nil when on master ref, it appends nothing.
