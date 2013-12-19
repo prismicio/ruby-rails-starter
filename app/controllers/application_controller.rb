@@ -29,44 +29,7 @@ class ApplicationController < ActionController::Base
                     .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
                     .submit(@ref)
   end
-
-
-  # Actions for the OAuth2 pages (signin, signout, ...)
-
-  def get_callback_url
-    callback_url(redirect_uri: request.env['referer'])
-  end
-
-  def signin
-    url = api.oauth_initiate_url({
-      client_id: PrismicService.config("client_id"),
-      redirect_uri: get_callback_url,
-      scope: "master+releases"
-    })
-    redirect_to url
-  end
-
-  def callback
-    access_token = api.oauth_check_token({
-      grant_type: "authorization_code",
-      code: params[:code],
-      redirect_uri: get_callback_url,
-      client_id: PrismicService.config("client_id"),
-      client_secret: PrismicService.config("client_secret"),
-    })
-    if access_token
-      session['ACCESS_TOKEN'] = access_token
-      url = params['redirect_uri'] || root_path
-      redirect_to url
-    else
-      render "Can't sign you in", status: :unauthorized
-    end
-  end
-
-  def signout
-    session['ACCESS_TOKEN'] = nil
-    redirect_to :root
-  end
+  
 
   private
 
