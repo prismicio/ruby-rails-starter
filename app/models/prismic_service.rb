@@ -20,7 +20,7 @@ module PrismicService
 
     # Gets a document from its ID.
     def get_document(id, api, ref)
-      documents = api.create_search_form("everything")
+      documents = api.form("everything")
                      .query("[[:d = at(document.id, \"#{id}\")]]")
                      .submit(ref)
 

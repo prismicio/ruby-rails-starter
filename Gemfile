@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'yajl-ruby', require: 'yajl'
 
-gem 'prismic.io', '~> 1.0.0.preview.6', require: 'prismic'
+gem 'prismic.io', '~> 1.0.0.preview.8', require: 'prismic'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

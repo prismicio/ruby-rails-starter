@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
-    @documents = api.create_search_form("everything").submit(@ref)
+    @documents = api.form("everything").submit(@ref)
   end
 
   # Single-document page action: mostly, setting the @document instance variable, and checking the URL
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   # Search result: querying all documents containing the q parameter
   def search
-    @documents = api.create_search_form("everything")
+    @documents = api.form("everything")
                     .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
                     .submit(@ref)
   end
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   ## before_action methods
 
   # Setting @ref as the actual ref id being queried, even if it's the master ref.
-  # To be used to call the API, for instance: api.create_search_form('everything').submit(@ref)
+  # To be used to call the API, for instance: api.form('everything').submit(@ref)
   def set_ref
     @ref = params[:ref].blank? ? api.master_ref.ref : params[:ref]
   end
