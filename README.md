@@ -1,18 +1,16 @@
-## Prismic.io starter for Ruby on Rails
+## Ruby on Rails starter project for prismic.io
 
 This is a blank Rails project that will connect to any [prismic.io](https://prismic.io)
-repository. It uses the prismic.io Ruby developement kit, and provides a few helpers
+repository, and trivially list its documents. It uses the prismic.io Ruby developement kit, and provides a few helpers
 to better use it with Rails.
 
-### How to start?
+### Getting started
 
-#### Instant install
+#### Launch the starter project
 
-If you haven't yet, install the latest versions of [Ruby](https://www.ruby-lang.org/en/downloads/), [Rails](http://rubyonrails.org/download) and [RubyGems](http://rubygems.org/pages/download).
+*(Assuming you've installed the latest versions of [Ruby](https://www.ruby-lang.org/en/downloads/), [Rails](http://rubyonrails.org/download) and [RubyGems](http://rubygems.org/pages/download).)*
 
 After forking and cloning the starter kit, it is immediately operational, so you can launch your `rails server` command. You may have to update your gems by running `bundle install`, but Rails will tell you about it if you must.
-
-The output of your `rails server` command tells you which URL to visit on your browser to see your brand new prismic.io Rails application.
 
 #### Configuring
 
@@ -20,22 +18,9 @@ By default, the starter kit uses the public API of the "Les Bonnes Choses" repos
 
 To get the OAuth configuration working (and be able to preview your future content release, as well as to access your API if it's private), go to the Applications panel in your repository settings, and create an OAuth application to allow interactive sign-in. Fill the application name and the callback URL (localhost URLs are always authorized, so at development time you can omit to fill the Callback URL field), and copy/paste the clientId & clientSecret tokens into the `config/prismic.yml` file.
 
-### Learn more
+You may have to restart your Rails server.
 
-#### Learn about prismic.io
-
-On our [prismic.io developer's portal](https://developers.prismic.io/), on top of the complete documentation, you will:
- * get a better understanding of [what prismic.io is and how to get started with it](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started).
- * get a thorough understanding of [how prismic.io kits work](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one. There's a couple of specificities for Ruby's case, described below.
- * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby).
-
-#### Kit documentation
-
-To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames)
-
-Need to see what changed, or to upgrade your kit? Check out [the kit's changelog](https://github.com/prismicio/ruby-kit/changelog.md).
-
-### Specifics and sugar of the Rails starter kit
+#### Specifics and sugar of the Rails starter kit
 
 There are several places where you'll be able to find helpful helpers of many kinds. All is documented in the source code, but here's an overview of the most important parts, so you get to know your starter kit better:
  * in `config/initializers/prismic_custom.rb`:
@@ -58,6 +43,18 @@ There are several places where you'll be able to find helpful helpers of many ki
   * "document" pages call Prismic::Document#as_html_safe (HTML serialisation of all the document's fragments in order).
   * "search" pages are search results.
   * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those components.
+
+#### Get started with prismic.io
+
+You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
+
+#### Understand the Ruby development kit
+
+You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/ruby-kit/blob/master/README.md).
+
+### Contribute to the starter project
+
+Contribution is open to all developer levels, read our "[Contribute to the official kits](https://developers.prismic.io/documentation/UszOeAEAANUlwFpp/contribute-to-the-official-kits)" documentation to learn more.
 
 ### Licence
 
