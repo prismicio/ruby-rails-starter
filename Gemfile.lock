@@ -53,7 +53,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.7.9)
     polyglot (0.3.3)
-    prismic.io (1.0.0.rc1)
+    prismic.io (1.0.0.rc3)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -113,7 +113,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
-  prismic.io (~> 1.0.0.rc1)
+  prismic.io (~> 1.0.0.rc3)
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)
   sdoc
