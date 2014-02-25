@@ -20,30 +20,6 @@ To get the OAuth configuration working (and be able to preview your future conte
 
 You may have to restart your Rails server.
 
-#### Specifics and sugar of the Rails starter kit
-
-There are several places where you'll be able to find helpful helpers of many kinds. All is documented in the source code, but here's an overview of the most important parts, so you get to know your starter kit better:
- * in `config/initializers/prismic_custom.rb`:
-  * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
-  * out-of-the-box allows you to write `as_html_safe(link_resolver(@maybe_ref))` in your views, instead of having to write `as_html(link_resolver(@maybe_ref)).html_safe`.
- * in `app/models/prismic_service.rb`:
-  * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
-  * provides `get_document(id, api, ref)`, which retrieves the document from its id.
-  * ...
- * in `app/helpers/prismic_helper.rb`:
-  * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your users might link to.
-  * ...
- * in `app/controllers/application_controller.rb`:
-  * initializes and provides `@api`, through the `api` method (it also exists in `prismic_helper.rb`, so you can also use it as `api` in your views).
-  * initializes @ref, the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(@ref)`.
-  * initializes @maybe_ref, the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: @maybe_ref)` or `document_link(@maybe_ref)`.
-  * provides all necessary controller actions to have the OAuth pages working (signin, signout, callback, ...).
- * pages by default:
-  * the "index" page displays all documents, paginated by 20, and lists them as links towards their "document" pages.
-  * "document" pages call Prismic::Document#as_html_safe (HTML serialisation of all the document's fragments in order).
-  * "search" pages are search results.
-  * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those components.
-
 #### Get started with prismic.io
 
 You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
@@ -51,6 +27,59 @@ You can find out [how to get started with prismic.io](https://developers.prismic
 #### Understand the Ruby development kit
 
 You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/ruby-kit/blob/master/README.md).
+
+#### Specifics and sugar of the Rails starter project
+
+There are several places where you'll be able to find helpful helpers of many kinds. Here's an overview of the most important parts, so you get to know your starter project better:
+
+ * in `config/initializers/prismic_custom.rb`:
+   * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
+   * out-of-the-box allows you to write `as_html_safe(link_resolver(@maybe_ref))` in your views, instead of having to write `as_html(link_resolver(@maybe_ref)).html_safe`.
+ * in `app/models/prismic_service.rb`:
+   * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
+   * provides `get_document(id, api, ref)`, which retrieves the document from its id.
+   * ...
+ * in `app/helpers/prismic_helper.rb`:
+   * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
+   * ...
+ * in `app/controllers/application_controller.rb`:
+   * initializes and provides `@api`, through the `api` method (it also exists in `prismic_helper.rb`, so you can also use it as `api` in your views).
+   * initializes @ref, the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(@ref)`.
+   * initializes @maybe_ref, the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: @maybe_ref)` or `document_link(@maybe_ref)`.
+ * in `app/controllers/prismic_oauth_controller.rb`:
+   * provides all necessary controller actions to have the OAuth pages working (signin, signout, callback, ...).
+ * pages by default:
+   * the "index" page displays all documents, paginated by 20, and lists them as links towards their "document" pages.
+   * "document" pages display a whole document in a trivial way.
+   * "search" pages are search results.
+   * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those UI components.
+
+### Other technical operations
+
+#### Work with a local database
+
+You don't actually need a database to run this starter project, as prismic.io handles everything for you (content, users, ...); if your website is all about content, you may never even need a database at all! Therefore, our starter project comes without ActiveRecord (the part of Rails that handles the connection with databases, and the model tier)
+
+However, if your project offers other features than displaying content, you may need to store and retrieve non-content data from a local database. Here's how you put ActiveRecord back in your Rails starter project:
+
+ * Comment-out the 4 `require` statements at the top of [application.rb](https://github.com/prismicio/ruby-rails-starter/blob/5224b130316ffb3b4ad8d10b49043fa3ab867eae/config/application.rb), replace them with `require 'rails/all'`.
+ * Add the gem for the kind of database you have in mind to use (you can un-comment-out [the one we left for SQLite](https://github.com/prismicio/ruby-rails-starter/blob/5224b130316ffb3b4ad8d10b49043fa3ab867eae/Gemfile#L7), but we advise you to rather use the kind of database you will use in production).
+ * create your `config/database.yml` file, which entirely depends on the kind of database you'll be using. Here are [exemples of usual database.yml files](https://gist.github.com/erichurst/961978), but you should rather check the documentation for the database gem you're using.
+ * Un-comment-out the `ActiveRecord::Migration.check_pending!` line we left for you in [test_helper.rb](https://github.com/prismicio/ruby-rails-starter/blob/5224b130316ffb3b4ad8d10b49043fa3ab867eae/test/test_helper.rb#L6).
+ * Un-comment-out the `config.active_record.migration_error = :page_load` line we left for you in [test_helper.rb](https://github.com/prismicio/ruby-rails-starter/blob/5224b130316ffb3b4ad8d10b49043fa3ab867eae/config/environments/development.rb#L23).
+
+#### Deploying your application
+
+This starter project is immediately deployable on most hosting platforms that are compatible with Rails 4. To deploy it on [Heroku](https://www.heroku.com/), simply [create a Heroku account](https://id.heroku.com/signup/www-home-top), install the [Heroku Toolbelt](https://toolbelt.heroku.com/), and log into it by running `heroku login` in your terminal.
+
+Then, go to your project's directory in your terminal, and run:
+
+```
+heroku create
+git push heroku master
+```
+
+Now your site is live for the world to see!
 
 ### Contribute to the starter project
 
