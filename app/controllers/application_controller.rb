@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
     @documents = api.form("everything").submit(ref)
+  rescue Prismic::API::PrismicWSAuthError
+    redirect_to signin_path
   end
 
   # Single-document page action: mostly, setting the @document instance variable, and checking the URL
@@ -20,6 +22,8 @@ class ApplicationController < ActionController::Base
       render inline: "Document not found", status: :not_found if !@slug_checker[:redirect]
       redirect_to document_path(id, @document.slug), status: :moved_permanently if @slug_checker[:redirect]
     end
+  rescue Prismic::API::PrismicWSAuthError
+    redirect_to signin_path
   end
 
   # Search result: querying all documents containing the q parameter
@@ -27,6 +31,8 @@ class ApplicationController < ActionController::Base
     @documents = api.form("everything")
                     .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
                     .submit(ref)
+  rescue Prismic::API::PrismicWSAuthError
+    redirect_to signin_path
   end
   
 
@@ -55,10 +61,17 @@ class ApplicationController < ActionController::Base
   # Easier access and initialization of the Prismic::API object.
   def api
     @api ||= PrismicService.init_api(access_token)
+  rescue Prismic::API::PrismicWSAuthError => e
+    reset_access_token!
+    raise e
   end
 
   def access_token
     @access_token = session['ACCESS_TOKEN']
+  end
+
+  def reset_access_token!
+    @access_token = session['ACCESS_TOKEN'] = nil
   end
 
 end

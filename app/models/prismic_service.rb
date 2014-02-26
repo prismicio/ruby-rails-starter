@@ -18,6 +18,16 @@ module PrismicService
       Prismic.api(config('url'), access_token)
     end
 
+    def oauth_initiate_url(access_token, oauth_opts)
+      access_token ||= self.access_token
+      Prismic.oauth_initiate_url(config('url'), oauth_opts, access_token)
+    end
+
+    def oauth_check_token(access_token, oauth_opts)
+      access_token ||= self.access_token
+      Prismic.oauth_check_token(config('url'), oauth_opts, access_token)
+    end
+
     # Gets a document from its ID.
     def get_document(id, api, ref)
       documents = api.form("everything")

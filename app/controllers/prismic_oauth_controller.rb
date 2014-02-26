@@ -8,24 +8,24 @@ class PrismicOauthController < ApplicationController
   end
 
   def signin
-    url = api.oauth_initiate_url({
+    url = PrismicService.oauth_initiate_url(access_token,
       client_id: PrismicService.config("client_id"),
       redirect_uri: get_callback_url,
       scope: "master+releases"
-    })
+    )
     redirect_to url
   end
 
   def callback
-    access_token = api.oauth_check_token({
+    token = PrismicService.oauth_check_token(access_token,
       grant_type: "authorization_code",
       code: params[:code],
       redirect_uri: get_callback_url,
       client_id: PrismicService.config("client_id"),
       client_secret: PrismicService.config("client_secret"),
-    })
-    if access_token
-      session['ACCESS_TOKEN'] = access_token
+    )
+    if token
+      session['ACCESS_TOKEN'] = token
       url = params['redirect_uri'] || root_path
       redirect_to url
     else
