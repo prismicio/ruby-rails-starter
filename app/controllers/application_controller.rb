@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   # Setting @ref as the actual ref id being queried, even if it's the master ref.
   # To be used to call the API, for instance: api.form('everything').submit(ref)
   def ref
-    @ref = params[:ref].blank? ? api.master_ref.ref : params[:ref]
+    @ref ||= maybe_ref || api.master_ref.ref
   end
 
   # Setting @maybe_ref as the ref id being queried, or nil if it is the master ref.
@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   #  * you can use it to call Rails routes: document_path(ref: maybe_ref), which will add "?ref=refid" as a param, but only when needed.
   #  * you can pass it to your link_resolver method, which will use it accordingly.
   def maybe_ref
-    @maybe_ref = (params[:ref] != '' ? params[:ref] : nil)
+    @maybe_ref ||= (params[:ref].blank? ? nil : params[:ref])
   end
 
   ##
