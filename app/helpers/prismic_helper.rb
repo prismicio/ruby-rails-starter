@@ -31,4 +31,14 @@ module PrismicHelper
     @api
   end
 
+  # Return the actual used reference
+  def ref
+    @ref ||= maybe_ref || api.master_ref.ref
+  end
+
+  # Return the set reference
+  def maybe_ref
+    @maybe_ref ||= (params[:ref].blank? ? nil : params[:ref])
+  end
+
 end
