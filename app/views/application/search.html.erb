@@ -1,11 +1,11 @@
 <h1><%=
-  case @documents.size
+  case @documents.total_results_size
   when 0
     "No result found"
   when 1
     "One document found"
   else
-    "#{@documents.size} documents found"
+    "#{@documents.total_results_size} documents found"
   end
 %></h1>
 
@@ -21,6 +21,27 @@
     </li>
   <% end %>
 </ul>
+
+<hr>
+
+<% if @documents.total_pages > 1 %>
+  <ul>
+    <% if @documents.prev_page %><li><a href="<%= search_path(q: params[:q], ref: maybe_ref, page: @documents.page==2 ? nil : @documents.page-1, page_size: params[:page_size]) %>">previous page</a></li><% end %>
+    <% @documents.total_pages.times do |i| %>
+      <% j = i+1 %>
+      <li>
+        <% if @documents.page == j %>
+          <span><%= j %></span>
+        <% else %>
+          <a href="<%= search_path(q: params[:q], ref: maybe_ref, page: j==1 ? nil : j, page_size: params[:page_size]) %>"><%= j %></a>
+        <% end %>
+      </li>
+    <% end %>
+    <% if @documents.next_page %><li><a href="<%= search_path(q: params[:q], ref: maybe_ref, page: @documents.page+1, page_size: params[:page_size]) %>">next page</a></li><% end %>
+  </ul>
+<% end %>
+
+<hr>
 
 <p>
   <%= link_to "Back to home", root_path(ref: maybe_ref) %>

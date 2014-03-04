@@ -7,7 +7,10 @@ class ApplicationController < ActionController::Base
 
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
-    @documents = api.form("everything").submit(ref)
+    @documents = api.form("everything")
+                    .page(params[:page] ? params[:page] : "1")
+                    .page_size(params[:page_size] ? params[:page_size] : "20")
+                    .submit(ref)
   end
 
   # Single-document page action: mostly, setting the @document instance variable, and checking the URL
@@ -30,6 +33,8 @@ class ApplicationController < ActionController::Base
   def search
     @documents = api.form("everything")
                     .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
+                    .page(params[:page] ? params[:page] : "1")
+                    .page_size(params[:page_size] ? params[:page_size] : "20")
                     .submit(ref)
   end
 
