@@ -34,7 +34,7 @@ There are several places where you'll be able to find helpful helpers of many ki
 
  * in `config/initializers/prismic_custom.rb`:
    * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
-   * out-of-the-box allows you to write `as_html_safe(link_resolver(@maybe_ref))` in your views, instead of having to write `as_html(link_resolver(@maybe_ref)).html_safe`.
+   * out-of-the-box allows you to write `as_html_safe(link_resolver(maybe_ref))` in your views, instead of having to write `as_html(link_resolver(maybe_ref)).html_safe`.
  * in `app/models/prismic_service.rb`:
    * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
    * provides `get_document(id, api, ref)`, which retrieves the document from its id.
@@ -43,9 +43,9 @@ There are several places where you'll be able to find helpful helpers of many ki
    * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
    * ...
  * in `app/controllers/application_controller.rb`:
-   * initializes and provides `@api`, through the `api` method (it also exists in `prismic_helper.rb`, so you can also use it as `api` in your views).
-   * initializes @ref, the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(@ref)`.
-   * initializes @maybe_ref, the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: @maybe_ref)` or `document_link(@maybe_ref)`.
+   * Provides the `api` method (it also exists in `prismic_helper.rb`, so you can also use it as `api` in your views).
+   * Provides the `ref` method, retuning the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(ref)`.
+   * Provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)` or `document_link(maybe_ref)`.
  * in `app/controllers/prismic_oauth_controller.rb`:
    * provides all necessary controller actions to have the OAuth pages working (signin, signout, callback, ...).
  * pages by default:
