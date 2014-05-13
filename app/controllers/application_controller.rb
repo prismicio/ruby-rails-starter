@@ -1,4 +1,6 @@
-class ApplicationController < PrismicController
+class ApplicationController < ActionController::Base
+  include PrismicController
+
   protect_from_forgery with: :exception
 
   # Rescue OAuth errors for some actions

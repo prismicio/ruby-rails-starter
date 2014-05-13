@@ -1,7 +1,5 @@
-# The necessary actions to have prismic.io OAuth2 connection working.
-# This allows to access to the master ref on private APIs, and to access to the future content releases.
-# If you need to change your client id and client secret, it happens in the config/prismic.yml file.
-class PrismicController < ActionController::Base
+# The necessary methods your controller needs to use prismic.io transparently
+module PrismicController
 	
   def get_callback_url
     callback_url(redirect_uri: request.env['referer'])

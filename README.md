@@ -32,27 +32,29 @@ You'll find more information about how to use the development kit included in th
 
 There are several places where you'll be able to find helpful helpers of many kinds. Here's an overview of the most important parts, so you get to know your starter project better:
 
- * in `config/initializers/prismic_custom.rb`:
-   * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
-   * out-of-the-box allows you to write `as_html_safe(link_resolver(maybe_ref))` in your views, instead of having to write `as_html(link_resolver(maybe_ref)).html_safe`.
- * in `app/models/prismic_service.rb`:
-   * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
-   * provides `get_document(id, api, ref)`, which retrieves the document from its id.
-   * ...
- * in `app/helpers/prismic_helper.rb`:
-   * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
-   * ...
- * in `app/controllers/application_controller.rb`:
-   * Provides the `api` method (it also exists in `prismic_helper.rb`, so you can also use it as `api` in your views).
-   * Provides the `ref` method, retuning the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(ref)`.
-   * Provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)` or `document_link(maybe_ref)`.
- * in `app/controllers/prismic_oauth_controller.rb`:
+
+ * in `app/controllers/prismic_controller.rb`:
+   * its role: providing a module you can use as a mixin in your controllers to make it trivial to use prismic.io in your actions.
+   * provides the `api` method to instantiate your `Prismic::Api` object.
+   * provides the `ref` method, retuning the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(ref)`.
+   * provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)` or `document_link(maybe_ref)`.
    * provides all necessary controller actions to have the OAuth pages working (signin, signout, callback, ...).
- * pages by default:
+ * we've included some basic pages by default:
    * the "index" page displays all documents, paginated by 20, and lists them as links towards their "document" pages.
    * "document" pages display a whole document in a trivial way.
    * "search" pages are search results.
    * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those UI components.
+ * in `app/helpers/prismic_helper.rb`:
+   * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
+   * provides `api`, `ref` and `maybe_ref` method, just like in `PrismicController`, to use those in the views.
+   * ...
+ * in `app/models/prismic_service.rb`:
+   * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
+   * provides `get_document(id, api, ref)`, which retrieves the document from its id.
+   * ...
+ * in `config/initializers/prismic_custom.rb`:
+   * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
+   * out-of-the-box allows you to write `as_html_safe(link_resolver(maybe_ref))` in your views, instead of having to write `as_html(link_resolver(maybe_ref)).html_safe`.
 
 ### Other technical operations
 
