@@ -44,6 +44,7 @@ There are several places where you'll be able to find helpful helpers of many ki
    * "document" pages display a whole document in a trivial way.
    * "search" pages are search results.
    * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those UI components.
+ * in `app/controllers/prismic_oauth_controller.rb`: actions used to login/logout of OAuth, and their proper configuration in `routes.rb`.
  * in `app/helpers/prismic_helper.rb`:
    * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
    * provides `api`, `ref` and `maybe_ref` method, just like in `PrismicController`, to use those in the views.
