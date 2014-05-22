@@ -43,6 +43,7 @@ There are several places in this project where you'll be able to find helpful he
    * provides a basic `link_resolver(ref)` method to iterate upon. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to (read the very last paragraph of [our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation) to learn more about what link_resolver is for).
    * provides `api`, `ref` and `maybe_ref` method, just like in the `PrismicController` module, to be used in the views.
    * ...
+ * in `config/prismic.yml` : centralizes all information about the prismic.io repository's API (endpoint, client ID, client secret, ...)
  * in `app/models/prismic_service.rb`:
    * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
    * provides `get_document(id, api, ref)`, which retrieves the document from its id.
