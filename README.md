@@ -28,34 +28,33 @@ You can find out [how to get started with prismic.io](https://developers.prismic
 
 You'll find more information about how to use the development kit included in this starter project, by reading [its README file](https://github.com/prismicio/ruby-kit/blob/master/README.md).
 
-#### Specifics and sugar of the Rails starter project
+#### Specifics and helpers of the Rails starter project
 
-There are several places where you'll be able to find helpful helpers of many kinds. Here's an overview of the most important parts, so you get to know your starter project better:
-
+There are several places in this project where you'll be able to find helpful helpers of many kinds. You may want to learn about them in order to know your starter project better, or to take those that you think might be useful to you in order to integrate prismic.io in an existing app.
 
  * in `app/controllers/prismic_controller.rb`:
    * its role: providing a module you can use as a mixin in your controllers to make it trivial to use prismic.io in your actions.
-   * provides the `api` method to instantiate your `Prismic::Api` object.
+   * provides the `api` method to instantiate your `Prismic::Api` object once per HTTP request.
    * provides the `ref` method, retuning the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(ref)`.
-   * provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)` or `document_link(maybe_ref)`.
-   * provides all necessary controller actions to have the OAuth pages working (signin, signout, callback, ...).
- * we've included some basic pages by default:
-   * the "index" page displays all documents, paginated by 20, and lists them as links towards their "document" pages.
-   * "document" pages display a whole document in a trivial way.
-   * "search" pages are search results.
-   * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, changing content releases, ... Of course, you can customize those UI components.
- * in `app/controllers/prismic_oauth_controller.rb`: actions used to login/logout of OAuth, and their proper configuration in `routes.rb`.
+   * provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)`.
+ * in `app/controllers/prismic_oauth_controller.rb`:
+   * provides all necessary controller actions to have the OAuth pages working: signin, signout, callback, ... Comes with the proper routes in `config/routes.rb`.
  * in `app/helpers/prismic_helper.rb`:
-   * provides a basic `link_resolver(ref)` method. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to.
-   * provides `api`, `ref` and `maybe_ref` method, just like in `PrismicController`, to use those in the views.
+   * provides a basic `link_resolver(ref)` method to iterate upon. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to (read the very last paragraph of [our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation) to learn more about what link_resolver is for).
+   * provides `api`, `ref` and `maybe_ref` method, just like in the `PrismicController` module, to be used in the views.
    * ...
  * in `app/models/prismic_service.rb`:
    * provides `slug_checker(document, slug)`, which checks a provided slug against a document.
    * provides `get_document(id, api, ref)`, which retrieves the document from its id.
-   * ...
+   * provides a number of other methods that some other helpers rely on (`access_token`, `config`, `init_api`, ...). If you're integrating prismic.io into an existing project, you really want that file.
  * in `config/initializers/prismic_custom.rb`:
-   * you may customize the Ruby kit's behavior here (for instance, how it serializes fragments in HTML).
-   * out-of-the-box allows you to write `as_html_safe(link_resolver(maybe_ref))` in your views, instead of having to write `as_html(link_resolver(maybe_ref)).html_safe`.
+   * allows you may customize the Ruby kit's behavior here.
+   *out-of-the-box allows you to write `as_html_safe(link_resolver(maybe_ref))` in your views, instead of having to write `as_html(link_resolver(maybe_ref)).html_safe`.
+ * we've also included some basic pages by default, with their routes, controllers and views:
+   * the "index" page displays all documents, paginated by 20, and lists them as links towards their "document" pages.
+   * "document" pages display a whole document in a trivial way.
+   * "search" pages are search results.
+ * in `app/views/layouts/application.html.erb`, all those pages contain the necessary UI components to have the OAuth working out of the box: signing in, signing out, selectbox to change the previewed content release, ...
 
 ### Other technical operations
 
