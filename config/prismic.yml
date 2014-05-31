@@ -5,3 +5,5 @@ url: https://lesbonneschoses.prismic.io/api
 # OAuth2 configuration
 # client_id: ""
 # client_secret: ""
+
+# This file can contain ERB; for instance: client_id: <%= ENV['CLIENT_ID'] %>
