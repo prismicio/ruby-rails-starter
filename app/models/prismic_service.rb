@@ -3,7 +3,7 @@ module PrismicService
 
     # Easier reading in the prismic.yml configuration file.
     def config(key=nil)
-      @config ||= YAML.load_file(Rails.root + "config" + "prismic.yml")
+      @config ||= YAML.load(ERB.new(File.new(Rails.root + "config/prismic.yml").read).result)
       key ? @config.fetch(key) : @config
     end
 
