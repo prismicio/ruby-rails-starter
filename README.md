@@ -38,7 +38,9 @@ There are several places in this project where you'll be able to find helpful he
    * provides the `ref` method, retuning the ref id being currently queried, even if it's the master ref. To be used to call the API, for instance: `api.create_search_form('everything').submit(ref)`.
    * provides the `maybe_ref` method, returning the ref id being queried, or nil if it is the master ref. To be used where you want nothing if on master, but something if on another release, for instance: `root_path(ref: maybe_ref)`.
  * in `app/controllers/prismic_oauth_controller.rb`:
-   * provides all necessary controller actions to have the OAuth pages working: signin, signout, callback, ... Comes with the proper routes in `config/routes.rb`.
+   * provides all necessary controller actions to have the OAuth pages working: signin, signout, callback, ...
+ * in `config/routes.rb`:
+   * the routes to the OAuth pages: signin, signout, callback, ...
  * in `app/helpers/prismic_helper.rb`:
    * provides a basic `link_resolver(ref)` method to iterate upon. For a given document, the `link_resolver` method describes its URL on your front-office. You really should edit this method, so that it supports all the document types your content writers might link to (read the very last paragraph of [our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation) to learn more about what link_resolver is for).
    * provides `api`, `ref` and `maybe_ref` method, just like in the `PrismicController` module, to be used in the views.
