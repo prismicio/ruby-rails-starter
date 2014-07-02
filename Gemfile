@@ -31,6 +31,9 @@ gem 'yajl-ruby', require: 'yajl'
 
 gem 'prismic.io', '~> 1.0.0.rc9', require: 'prismic'
 
+# A gem to build simple paginations
+gem 'kaminari'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
