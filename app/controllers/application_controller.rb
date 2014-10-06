@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Search result: querying all documents containing the q parameter
   def search
     @documents = api.form("everything")
-                    .query(%([[:d = fulltext(document, "#{params[:q]}")]]))
+                    .query(Prismic::Predicates.fulltext("document", params[:q]))
                     .page(params[:page] ? params[:page] : "1")
                     .page_size(params[:page_size] ? params[:page_size] : "20")
                     .submit(ref)
