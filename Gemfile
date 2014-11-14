@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'yajl-ruby', require: 'yajl'
 
-gem 'prismic.io', '~> 1.0.7', require: 'prismic'
+gem 'prismic.io', '~> 1.0.8', require: 'prismic'
 
 # A gem to build simple paginations
 gem 'kaminari'

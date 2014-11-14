@@ -11,7 +11,7 @@ module PrismicController
   # Setting @ref as the actual ref id being queried, even if it's the master ref.
   # To be used to call the API, for instance: api.form('everything').submit(ref)
   def ref
-    @ref ||= maybe_ref || experiment_ref || api.master_ref.ref
+    @ref ||= maybe_ref || preview_ref || experiment_ref || api.master_ref.ref
   end
 
   # Setting @maybe_ref as the ref id being queried, or nil if it is the master ref.
@@ -21,6 +21,14 @@ module PrismicController
   #  * you can pass it to your link_resolver method, which will use it accordingly.
   def maybe_ref
     @maybe_ref ||= (params[:ref].blank? ? nil : params[:ref])
+  end
+
+  def preview_ref
+    if request.cookies.has_key?(Prismic::PREVIEW_COOKIE)
+      request.cookies[Prismic::PREVIEW_COOKIE]
+    else
+      nil
+    end
   end
 
   def experiment_ref

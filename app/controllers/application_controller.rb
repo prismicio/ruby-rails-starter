@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include PrismicHelper
   include PrismicController
 
   protect_from_forgery with: :exception
@@ -41,6 +42,14 @@ class ApplicationController < ActionController::Base
                     .page(params[:page] ? params[:page] : "1")
                     .page_size(params[:page_size] ? params[:page_size] : "20")
                     .submit(ref)
+  end
+
+  # For writers to preview a draft with the real layout
+  def preview
+    preview_token = params[:token]
+    redirect_url = api.preview_session(preview_token, link_resolver(preview_token), '/')
+    cookies[Prismic::PREVIEW_COOKIE] = { value: preview_token, expires: 30.minutes.from_now }
+    redirect_to redirect_url
   end
 
 end
