@@ -13,7 +13,7 @@ module PrismicService
     end
 
     ## Easier initialisation of the Prismic::API object.
-    def init_api(access_token)
+    def init_api
       access_token ||= self.access_token
       Prismic.api(config('url'), access_token)
     end

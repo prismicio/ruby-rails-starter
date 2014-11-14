@@ -67,8 +67,4 @@ StarterRubyRails::Application.routes.draw do
   # # Previews
   get '/preview', to: 'application#preview', as: :preview
 
-  # # Prismic.io OAuth - you shouldn't touch those lightly, if you need OAuth2 to keep working with prismic.io
-  get '/signin', to: 'prismic_oauth#signin', as: :signin
-  get '/callback', to: 'prismic_oauth#callback', as: :callback
-  get '/signout', to: 'prismic_oauth#signout', as: :signout
 end

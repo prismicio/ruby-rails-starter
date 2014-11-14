@@ -12,7 +12,7 @@
 <ul>
   <% @documents.each do |doc| %>
     <li>
-      <%= link_to doc.slug, link_resolver(maybe_ref).link_to(doc) %>
+      <%= link_to doc.slug, link_resolver().link_to(doc) %>
       <%#
         We could have written document_path(id: doc.id, slug: doc.slug, ref: maybe_ref);
         but it's better to use the link_resolver, as it allows you to maintain in one place
@@ -29,7 +29,7 @@
 <hr>
 
 <p>
-  <%= link_to "Back to home", root_path(ref: maybe_ref) %>
+  <%= link_to "Back to home", root_path() %>
   <%#
     Passing the ref parameter allows to keep it if we're previewing a future release.
     Note: if @ref is the master ref, then @maybe_ref is nil (allowing to discard the parameter here).

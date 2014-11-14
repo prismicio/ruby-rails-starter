@@ -30,25 +30,16 @@
     </div>
     <hr />
   <% end %>
-  <a href="/<%= "?ref=#{maybe_ref}" if maybe_ref %>">
+  <a href="/">
     <h1>Your prismic.io project</h1>
   </a>
 </header>
 
 <%= yield %>
 
-<footer>
-  <hr />
-  <% if connected? %>
-    <%= link_to signout_path do %>Sign out<% end %>
-  <% else %>
-    <%= link_to signin_path do %>Sign in to preview changes<% end %>
-  <% end %>
-</footer>
-
 <% # This file is required for Experiments and Previews. %>
 <script src="//static.cdn.prismic.io/prismic.min.js"></script>
-<% # Uncomment the tag below to activate experiments - your Google Analytics block should be before this tag %>
+<% # You can safely remove this block if you don't use experiments - your Google Analytics block should be before this tag %>
 <% render 'partials/experiments', :google_id => @google_id %>
 
 </body>
