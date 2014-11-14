@@ -46,5 +46,10 @@
   <% end %>
 </footer>
 
+<% # This file is required for Experiments and Previews. %>
+<script src="//static.cdn.prismic.io/prismic.min.js"></script>
+<% # Uncomment the tag below to activate experiments - your Google Analytics block should be before this tag %>
+<% render 'partials/experiments', :google_id => @google_id %>
+
 </body>
 </html>

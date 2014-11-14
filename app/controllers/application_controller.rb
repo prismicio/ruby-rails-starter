@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
+    @google_id = api.experiments.current
     @documents = api.form("everything")
                     .page(params[:page] ? params[:page] : "1")
                     .page_size(params[:page_size] ? params[:page_size] : "20")
@@ -20,6 +21,7 @@ class ApplicationController < ActionController::Base
     id = params[:id]
     slug = params[:slug]
 
+    @google_id = api.experiments.current
     @document = PrismicService.get_document(id, api, ref)
 
     # This is how an URL gets checked (with a clean redirect if the slug is one that used to be right, but has changed)
@@ -33,6 +35,7 @@ class ApplicationController < ActionController::Base
 
   # Search result: querying all documents containing the q parameter
   def search
+    @google_id = api.experiments.current
     @documents = api.form("everything")
                     .query(Prismic::Predicates.fulltext("document", params[:q]))
                     .page(params[:page] ? params[:page] : "1")

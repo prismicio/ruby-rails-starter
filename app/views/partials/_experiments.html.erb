@@ -1,0 +1,4 @@
+<% if @google_id != nil %>
+<script src="//www.google-analytics.com/cx/api.js?experiment=<%= googleId %>"></script>
+<script>prismic.startExperiment("<%= google_id %>", cxApi);</script>
+<% end %>
