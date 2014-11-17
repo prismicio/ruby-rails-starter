@@ -5,8 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # Rescue OAuth errors for some actions
-  rescue_from Prismic::API::PrismicWSAuthError, with: :redirect_to_signin,
-                                                only: [:index, :document, :search]
+  rescue_from Prismic::Error, with: :clearcookies
 
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
@@ -37,19 +36,25 @@ class ApplicationController < ActionController::Base
   # Search result: querying all documents containing the q parameter
   def search
     @google_id = api.experiments.current
-    @documents = api.form("everything")
-                    .query(Prismic::Predicates.fulltext("document", params[:q]))
-                    .page(params[:page] ? params[:page] : "1")
-                    .page_size(params[:page_size] ? params[:page_size] : "20")
+    @documents = api.form('everything')
+                    .query(Prismic::Predicates.fulltext('document', params[:q]))
+                    .page(params[:page] ? params[:page] : '1')
+                    .page_size(params[:page_size] ? params[:page_size] : '20')
                     .submit(ref)
   end
 
   # For writers to preview a draft with the real layout
   def preview
     preview_token = params[:token]
-    redirect_url = api.preview_session(preview_token, link_resolver(preview_token), '/')
+    redirect_url = api.preview_session(preview_token, link_resolver(), '/')
     cookies[Prismic::PREVIEW_COOKIE] = { value: preview_token, expires: 30.minutes.from_now }
     redirect_to redirect_url
+  end
+
+  # If something goes wrong, it could be because of an invalid preview token
+  def clearcookies
+    cookies.delete Prismic::PREVIEW_COOKIE
+    redirect_to '/'
   end
 
 end
