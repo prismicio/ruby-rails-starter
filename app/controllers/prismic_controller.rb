@@ -4,8 +4,10 @@ module PrismicController
   private
 
 
-  def redirect_to_signin
-    redirect_to signin_path
+  # If something goes wrong, it could be because of an invalid preview token
+  def clearcookies
+    cookies.delete Prismic::PREVIEW_COOKIE
+    redirect_to '/'
   end
 
   # Setting @ref as the actual ref id being queried, even if it's the master ref.

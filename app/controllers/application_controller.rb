@@ -51,10 +51,4 @@ class ApplicationController < ActionController::Base
     redirect_to redirect_url
   end
 
-  # If something goes wrong, it could be because of an invalid preview token
-  def clearcookies
-    cookies.delete Prismic::PREVIEW_COOKIE
-    redirect_to '/'
-  end
-
 end

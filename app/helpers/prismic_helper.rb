@@ -15,16 +15,6 @@ module PrismicHelper
     }
   end
 
-  # Checks if the user is connected to prismic.io's OAuth2.
-  def connected?
-    !!@access_token
-  end
-
-  # Checks if the user is connected or the app has an access token set for all users.
-  def privileged_access?
-    connected? || PrismicService.access_token
-  end
-
   # Allows to call api directly in the view
   # (to check the bookmarks, for instance, you shouldn't query in the view!)
   def api
