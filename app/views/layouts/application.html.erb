@@ -16,6 +16,11 @@
 
 <%= yield %>
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<% # This is required for the edit button. %>
+<script>
+  window.prismic = { endpoint: '<%= endpoint %>' };
+</script>
 <% # This file is required for Experiments and Previews. %>
 <script src="//static.cdn.prismic.io/prismic.min.js"></script>
 <% # You can safely remove this block if you don't use experiments - your Google Analytics block should be before this tag %>

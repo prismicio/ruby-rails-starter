@@ -1,4 +1,4 @@
-<article id="<%= @document.id %>">
+<article id="<%= @document.id %>" data-wio-id="<%= @document.id %>">
 	<%#
 		as_html_safe is a monkey-patch in your prismicio_custom.rb, just because it's faster than typing
 		@document.as_html(link_resolver(maybe_ref)).html_safe

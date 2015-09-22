@@ -21,6 +21,10 @@ module PrismicHelper
     @api
   end
 
+  def endpoint
+    PrismicService.config('url')
+  end
+
   # Return the actual used reference
   def ref
     @ref ||= maybe_ref || api.master_ref.ref
