@@ -4,16 +4,17 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  # Rescue OAuth errors for some actions
+  # Rescue bad preview cookies errors for some actions
   rescue_from Prismic::Error, with: :clearcookies
 
   # Homepage action: querying the "everything" form (all the documents, paginated by 20)
   def index
     @google_id = api.experiments.current
-    @documents = api.form("everything")
-                    .page(params[:page] ? params[:page] : "1")
-                    .page_size(params[:page_size] ? params[:page_size] : "20")
-                    .submit(ref)
+    @documents = api.all({
+      "page" => params[:page] ? params[:page] : "1",
+      "page_size" => params[:page_size] ? params[:page_size] : "20",
+      "ref" => ref
+    })
   end
 
   # Single-document page action: mostly, setting the @document instance variable, and checking the URL
@@ -22,7 +23,7 @@ class ApplicationController < ActionController::Base
     slug = params[:slug]
 
     @google_id = api.experiments.current
-    @document = PrismicService.get_document(id, api, ref)
+    @document = api.getByID(id, {"ref" => ref})
 
     # This is how an URL gets checked (with a clean redirect if the slug is one that used to be right, but has changed)
     # Of course, you can change slug_checker in prismic_service.rb, depending on your URL strategy.
